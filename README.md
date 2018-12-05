@@ -31,7 +31,9 @@ The CAN protocol uses Non-Return-to-Zero or NRZ bit coding.
 - This means that the signal is constant for one whole bit time and only one time segment is needed to represent one bit. The two bus conductors are called "CAN_H" and "CAN_L"
 The maximum CAN bus speed is 1 MBaud, which can be achieved with a bus length of up to 40 meters when using a twisted wire pair. 
 
-- The bus must be terminated at each end, typically using a resistor of 120 Ohms. For bus lengths longer than 40 meters the bus speed must be reduced. A 1000 meter bus can still be realised with a 50 KBaud bus speed. For a bus length above 1000 meters special drivers should be used.
+- The bus must be terminated at each end, typically using a resistor of 120 Ohms. 
+- For bus lengths longer than 40 meters the bus speed must be reduced. A 1000 meter bus can still be realised with a 50 KBaud bus speed. For a bus length above 1000 meters special drivers should be used.
+![node]()
 
 ### The CAN standard has the following main features: 
 * Serial communication protocol. 
@@ -59,7 +61,7 @@ The maximum CAN bus speed is 1 MBaud, which can be achieved with a bus length of
 ### The CAN singalling represents a 1 and 0 in the following way:
 * Logic 1 __(recessive)__: No signal sent (logic 0 wins) Transceiver output at CAN_L floats to 2.5V Transceiver output at CAN_H floats to 2.5V (i.e. there is a no voltage difference)
 * Logic 0 __(dominant)__: Forces bus to a zero level Transceiver output at CAN_L driven to 1.5V Transceiver output at CAN_H driven to 3.5V (i.e. there is a 2V voltage difference)
-![levels]()
+![levels](levels.png)
 ```
 //note
 recessive is weak guy which means no difference voltage
