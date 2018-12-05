@@ -70,6 +70,7 @@ recessive is weak guy which means no difference voltage
 dominant is strong one which means there is difference in voltage
 ```
 ![node](IMG/levelsdiff.png)
+-------------------------------------------------------------------------- 
 ![node](IMG/table.png)
 
 ### CAN Modules Types
