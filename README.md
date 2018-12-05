@@ -41,7 +41,9 @@ The maximum CAN bus speed is 1 MBaud, which can be achieved with a bus length of
 * High level of error handling 
 * Multi master multi slave communication. 
 * Message based protocol. 
-* Maximum rate of 1 Mbps with a bus length of 40 m with a maximum of 30 nodes.
+* Bus Lengths
+	* Maximum rate of 1 Mbps with a bus length of 40 m with a maximum of 30 nodes.
+	* A longer bus length can be achieved by slowing the data rate. The biggest limita- tion to bus length is the transceiver’s propagation delay.
 
 ### A CAN transceiver always has two bus pins: 
 * one for the CAN high line (CANH) and one for the CAN low line (CANL).
@@ -68,45 +70,38 @@ recessive is weak guy which means no difference voltage
 dominant is strong one which means there is difference in voltage
 ```
 ![node](IMG/levelsdiff.png)
-To enable arbitration, CAN uses 3 levels, in which one symbol lets both conductors float to zero. The other symbol drives both conductors - one to the opposite polarity of the other. This also has constant power envelope. The higher rate of CAN utilises synchronous transmission.
+![node](IMG/table.png)
 
- CAN Modules Types
+### CAN Modules Types
 The CAN modules can be classiﬁed as the following: 
-• 2.0A type: consider 29-bit ﬁeld for the ID as an error 
-• 2.0B passive: just ignores the 29-bit IDs. 
-• 2.0B Active: handles both the 11-bit and 29-bit IDs. The TM4C123GH6PM microcontroller includes two CAN controllers with support of CAN protocol version 2.0 part A/B.
+* 2.0A type: consider 29-bit ﬁeld for the ID as an error 
+* 2.0B passive: just ignores the 29-bit IDs. 
+* 2.0B Active: handles both the 11-bit and 29-bit IDs. 
+> The TM4C123GH6PM microcontroller includes two CAN controllers with support of CAN protocol version 2.0 part A/B.
 
 
-Bit Stuffing
-Synchronous transmission is used, with bit stuffing to ensure transparent synchronisation of all bus nodes. When transmitting the sender observes the sequence of bit values being sent. A maximum of five consecutive bits are allowed to have the same polarity, this removes contiguous series of identical values on the bus. Whenever five consecutive bits of the same polarity have been transmitted, the transmitter will insert one additional bit of the opposite polarity into the bit stream before transmitting further bits.
-Examples of Bit Stuffiing:
-1010101001 sent on cable, received as 1010101001 
-1010000001 sent on cable, received as 1010000001
-1010000111 sent on cable, received as 1010000111
-1010111111 sent on cable, received as 1010111111
-The receiver also checks the number of bits with the same polarity and removes the stuff bits again from the bit stream. This is called "destuffing". Hence, the sequence 0111111 becomes 01111101 on the wire, but the receiver correctly receives 0111111. The rule dictates also that the 0111110 becomes 01111100 on the wire, but the receiver then receives 0111110, since the receiver will automatically remove any bit after 5 consecutive bits. The removed stuffing bit must be the opposite polarity (or noted as an error). This happens automatically and ensures receivers always see transitions. - It can add up to one bit in five, maximum 20% additional overhead.
+### Bit Stuffing
+Synchronous transmission is used, with bit stuffing to ensure transparent synchronisation of all bus nodes. When transmitting the sender observes the sequence of bit values being sent. A maximum of __five__ consecutive bits are allowed to have the same polarity, this removes contiguous series of identical values on the bus. Whenever five consecutive bits of the same polarity have been transmitted, the transmitter will insert __one additional bit__ of the __opposite polarity__ into the bit stream before transmitting further bits.
+```
+__Examples of Bit Stuffiing:__
+__1010101001__ sent on cable, received as __1010101001__
+__1010000001__ sent on cable, received as __1010000001__
+__1010000111__ sent on cable, received as __1010000111__
+__1010111111__ sent on cable, received as __1010111111__
+
+```
+* The receiver also checks the number of bits with the same polarity and removes the stuff bits again from the bit stream. 
+This is called "__destuffing__". Hence, the sequence 0111111 becomes 01111101 on the wire, but the receiver correctly receives 0111111. 
+* The rule dictates also that the 0111110 becomes 01111100 on the wire, but the receiver then receives 0111110, since the receiver will automatically remove any bit after 5 consecutive bits. The removed stuffing bit must be the opposite polarity (or noted as an error). This happens automatically and ensures receivers always see transitions. 
+* It can add up to one bit in five, maximum 20% additional overhead.
 Effect of a corrupted stuffing bit
 Using "stuffing", a sequence 0111111 becomes 01111101 on the wire, but the receiver correctly receives 0111111 after removing the extra "stuffed" bit. Several problem can arise when such a stuffed stream is corrupted (i.e. a bit is inverted). Consider the following
 * Corruption of the wire transmission of 01111101 to 01101101 (inverting the 4th bit). This results in the receiver output sending 01101101 - one bit has been inverted, but also the stuffing bit has not been removed, and there is therefore a bit-slip, all later data will be shifted by one bit.
 * Corruption of the wire transmission of 01111101 to 01111111 (inverting the 7th bit). ). This results in the receiver experiencing an illegal sequence. It expected a stuffing bit, but did not find one. The receiver is aware of the error and needs to take appropriate action.
 * Corruption of the wire transmission of 0111100 to 0111110 (inverting the 6th bit). In this case there was no stuffing inserted by the transmitter, but the receiver sees a sequence that causes it to remove (de-stuff) the final 0. The output is 011111 One bit has been inverted, and one bit has been removed, and there is therefore a bit-slip, all later data will be shifted by one bit.
-The advantage of being able to send any binary data, while preserving clock transitions is that any errors can result in insertion or deletion of bits. While this is likely to be uncommon in practice (there are not usually many stuffing bits - so it is unlikely that they will be corrupted), the receiver must use an integrity that provides a strong guarantee of detecting destuffing mistakes. A CRC is usually used.
+* The advantage of being able to send any binary data, while preserving clock transitions is that any errors can result in insertion or deletion of bits. While this is likely to be uncommon in practice (there are not usually many stuffing bits - so it is unlikely that they will be corrupted), the receiver must use an integrity that provides a strong guarantee of detecting destuffing mistakes. A CRC is usually used.
 
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-DATA LINK LAYER,
+## DATA LINK LAYER
 The CAN data link layer provides the functional and procedural means to transfer data between nodes including size of transmitted data buffer alocation  and ensures correct reception of data, it comprises two protocols: Classical CAN  and CAN FD ( ISO 11898-1),  
 
 The structure of CAN data frames are the same for Classical CAN and CAN FD, just the field details are different
