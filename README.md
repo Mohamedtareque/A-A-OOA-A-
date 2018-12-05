@@ -69,8 +69,7 @@ The maximum CAN bus speed is 1 MBaud, which can be achieved with a bus length of
 recessive is weak guy which means no difference voltage
 dominant is strong one which means there is difference in voltage
 ```
-![node](IMG/levelsdiff.png)
-
+![node](IMG/leveldiff.png)
 ![node](IMG/table.png)
 
 ### CAN Modules Types
