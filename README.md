@@ -67,6 +67,7 @@ The maximum CAN bus speed is 1 MBaud, which can be achieved with a bus length of
 recessive is weak guy which means no difference voltage
 dominant is strong one which means there is difference in voltage
 ```
+![node](IMG/levelsdiff.png)
 To enable arbitration, CAN uses 3 levels, in which one symbol lets both conductors float to zero. The other symbol drives both conductors - one to the opposite polarity of the other. This also has constant power envelope. The higher rate of CAN utilises synchronous transmission.
 
  CAN Modules Types
