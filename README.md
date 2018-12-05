@@ -1,7 +1,7 @@
 ## CAN (Controller Area Network)
  > is a message based serial communication protocol used especially for reliable data exchange 
 
-## CAN network structure
+### CAN network structure
 - A CAN network consists of a number of CAN nodes which are linked via a physical transmission link (can bus)  In practice,           the CAN network is usually based on a line topology with a linear bus to which a number of electronic control units are each connected via a CAN interface. The passive star topology may be used as an alternative.
 
 
@@ -22,7 +22,7 @@
   - bit stuffing/de- stuffing 
   - the serialization and deserialization functions.
   
-![image](https://raw.githubusercontent.com/Users/aaaa/Desktop/x.png)
+![image](x.png)
 
 ### Physical layer
 - A twisted two-wire line is the physical transmission medium depends on Electrical Difference formation that can be used to eliminate noises and the useful signal remains unaffected. Symmetrical signal transmission results in a physical transmission medium (can bus) consisting of two lines: the CAN-High line (CANH) and CAN-Low line (CANL)
@@ -49,13 +49,22 @@ The maximum CAN bus speed is 1 MBaud, which can be achieved with a bus length of
 - the maximum number of CAN nodes largely depends on the performance of the CAN transceivers used and whether it is a high-speed or low-speed CAN network.
 
 ### CAN bus levels
-* ISO 11898-2 assigns logical 1 to a typical diﬀerential voltage of 0 Volt. The logical 0 is assigned with a typical diﬀerential voltage of 2 Volt.
-* High-speed CAN transceivers interpret a differential voltage of more than 0.9 Volt as a dominant level within the common mode operating range, typically between 12 Volt and -12 Volt. Below 0.5 Volt, however, the diﬀerential voltage is interpreted as a recessive level. Regarding the bus logic, the dominant bus level corresponds to logical 0. The recessive bus level corresponds to logical 1. The dominant bus level overwrites the recessive bus level. When diﬀerent CAN nodes send dominant and recessive bus levels simultaneously, the CAN bus assumes the dominant bus level. The recessive bus level only occurs if all CAN nodes send recessive levels. In terms of logic, such behavior is AND-logic. Physically, AND-logic is implemented by a so-called open collector circuit.
+* CAN specifies two logical states: recessive and domi- nant. ISO-11898 defines a differential voltage to repre- sent recessive and dominant states (or bits)
 
-The CAN singalling represents a 1 and 0 in the following way:
-* Logic 1 (recessive): No signal sent (logic 0 wins) Transceiver output at CAN_L floats to 2.5V Transceiver output at CAN_H floats to 2.5V (i.e. there is a no voltage difference)
-* Logic 0 (dominant): Forces bus to a zero level Transceiver output at CAN_L driven to 1.5V Transceiver output at CAN_H driven to 3.5V (i.e. there is a 2V voltage difference)
+* High-speed CAN transceivers interpret a differential voltage of more than 0.9 Volt as a dominant level within the common mode operating range, typically between 12 Volt and -12 Volt. Below 0.5 Volt, however, the diﬀerential voltage is interpreted as a recessive level. 
+* Regarding the bus logic, the __dominant__ bus level corresponds to logical __0__. 
+* The recessive bus level corresponds to logical 1. 
+* The dominant bus level overwrites the recessive bus level. When diﬀerent CAN nodes send dominant and recessive bus levels simultaneously, the CAN bus assumes the dominant bus level. The recessive bus level only occurs if all CAN nodes send recessive levels. In terms of logic, such behavior is AND-logic. Physically, AND-logic is implemented by a so-called open collector circuit.
 
+### The CAN singalling represents a 1 and 0 in the following way:
+* Logic 1 __(recessive)__: No signal sent (logic 0 wins) Transceiver output at CAN_L floats to 2.5V Transceiver output at CAN_H floats to 2.5V (i.e. there is a no voltage difference)
+* Logic 0 __(dominant)__: Forces bus to a zero level Transceiver output at CAN_L driven to 1.5V Transceiver output at CAN_H driven to 3.5V (i.e. there is a 2V voltage difference)
+![levels]()
+```
+//note
+recessive is weak guy which means no difference voltage
+dominant is strong one which means there is difference in voltage
+```
 To enable arbitration, CAN uses 3 levels, in which one symbol lets both conductors float to zero. The other symbol drives both conductors - one to the opposite polarity of the other. This also has constant power envelope. The higher rate of CAN utilises synchronous transmission.
 
  CAN Modules Types
